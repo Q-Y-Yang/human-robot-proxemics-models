@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<library path="lib/libsocial_costmap_layer">
+  <class
+    name="social_layer/SocialCostmapLayer"
+    type="social_layer::SocialCostmapLayer"
+    base_class_type="costmap_2d::Layer">
+    <description>Injects an OccupancyGrid social cost into the layered costmap.</description>
+  </class>
+</library>
+

@@ -1,6 +1,6 @@
 # Learnable Human-Robot Proxemics Models
 
-This is the code repository for the paper [Learning Human-Robot Proxemics Models from Experimental Data](https://www.mdpi.com/2079-9292/14/18/3704). 
+This is the code repository for the paper [Learning Human-Robot Proxemics Models from Experimental Data](https://www.mdpi.com/2079-9292/14/18/3704). This README explains how to learn, infer, and evaluate the Human-Robot Proxemic Models, as well as how to integrate them into robot navigation.
 
 
 ## Main Dependencies
@@ -50,6 +50,37 @@ learn_interaction_points.ipynb
 * `evaluation_asym_gaus.py`: quantitative evaluation for a baseline model.
 
 ## Deployment
+
+1. Launch your robot.
+2. Launch the robot's navigation package. Add a social layer plugin into the costmap configuration such as `global_costmap.yaml` or `local_costmap.yaml`. For example,
+```
+plugins:
+    - name: social_layer
+      type: 'social_layer/SocialCostmapLayer'
+
+social_layer:
+    enabled            : true
+    max_time_passed    : 10
+    gaussian_renorming : 150
+    cutoff: 0.0
+    amplitude: 77.0
+    covariance: 0.25
+    factor: 5.0
+    keep_time: 0.75
+    topic: /social_costmap
+
+```     
+3. Run the social cost node. It subscribes a `People` topic and generates a `social_costmap` accordingly. 
+
+```
+rosrun social_costmap_ros social_costmap_node.py
+```
+
+Notably, `social_costmap_layer` package adds the social costmap to the final costmap used for robot navigation.
+
+* Tip: We need the position and yaw of the detected person. These can also be represented using ROS `PoseStamped` message type including the 3D position and orientation as a quaternion.
+### Main Dependencies
+* ROS Noetic
 
 
 
